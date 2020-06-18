@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Adjustable Layout Demo</title>
+<script src="gwLayout.js"></script>
+<script src="gwSettings.js"></script>
+
+<style>
+.column {
+ float: left;
+  width: 33.33%;
+}
+
+/* Clear floats after thecolumns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+} 
+</style>
+
+</head>
+
+
+<body>
+<h1>Adjustable Layout Demo 3 Column Div</h1>
+
+<p>
+<div id="message" style="font-weight:bold;">
+Here is a simple 3 column layout. You can adjust the order of the fields by preseeing the 'Edit Layout button below'.
+</div>
+</p>
+
+<div class="row">
+  <div class="column" id="placeholder1">
+    <div style="float:left;" id="firstname">
+      <label for="username">First Name</label>
+      <input id="user_first_name" name="user[first_name]" size="30" type="text" />
+    </div>
+</div>
+
+   <div class="column" id="placeholder2">
+     <div style="float:left;" id="lastname">
+       <label for="name">Last Name</label>
+       <input id="user_last_name" name="user[last_name]" size="30" type="text" />
+     </div>
+   </div>
+
+  <div class="column" id="placeholder3">
+    <div style="float:left;" id="dob">
+     <label for="dob">Date of Birth</label>
+     <input id="user_dob" name="user[dob]" size="30" type="text" />
+   </div>
+  </div>
+</div>  <!-- end of of row -->
+
+<div class="row">
+  <div class="column" id="placeholder4">    <div style="float:left;" id="text1">Text 4</div> </div>
+  <div class="column" id="placeholder5"><div style="float:left;" id="text2">Text 5</div> </div>
+  <div class="column" id="placeholder6"><div style="float:left;" id="text3">Text 6</div> </div>
+</div> 
+<p/>
+
+<div>
+<button id="editbutton" onclick="editLayout();">Edit Layout</button>
+<button id="savebutton" onclick="saveLayout();" disabled="true">Save Layout</button>
+
+</div>
+<script>
+var pageSettings = new gwSetting();
+var LayoutDetails={};
+var LayoutDetailsStr = pageSettings.GetSetting("pageLayout");
+if (LayoutDetailsStr == "")
+ {
+LayoutDetails["placeholder1"]="lastname";
+LayoutDetails["placeholder2"]="firstname";
+LayoutDetails["placeholder3"]="dob";
+LayoutDetails["placeholder4"]="text1";
+LayoutDetails["placeholder5"]="text2";
+LayoutDetails["placeholder6"]="text3";
+ }
+else
+ {
+ LayoutDetails = JSON.parse(LayoutDetailsStr);
+ }
+
+var pageLayout=new gwLayout(LayoutDetails);
+pageLayout.applyLayout();
+
+function editLayout()
+{
+document.getElementById("editbutton").disabled=true;
+document.getElementById("savebutton").disabled=false;
+pageLayout.enableDragDrop();
+document.getElementById("message").textContent = "Now drag and drop the fields on this page around and set the way you like it. Then hit the save  layout to remember your layout.";
+}
+
+function saveLayout()
+{
+
+document.getElementById("editbutton").disabled=false;
+document.getElementById("savebutton").disabled=true;
+var newlayout = pageLayout.getCurrentLayout();
+var jsonnewLayout=JSON.stringify(newlayout);
+//alert (jsonnewLayout);
+pageSettings.WriteSetting("pageLayout",jsonnewLayout);
+document.getElementById("message").textContent = "Your new layout has been saved. You can refresh this page and the layout will stay the same. Hit the Edit Layout button to change again.";
+pageLayout.disableDragDrop();
+}
+</script>
+</body>
+
+</html>
