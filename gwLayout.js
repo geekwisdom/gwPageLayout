@@ -101,6 +101,7 @@ this.enabled=false;
 
 gwLayout.prototype.enableDragDrop = function()
 {
+
 var self=this;
 //enable drag & drop for each Placeholder (add javascript drag/drop functions) or 'enable'/'disable' the drag/drop flag?
 var LayoutDetails = this.LayoutDetails;
@@ -139,6 +140,7 @@ var allowDrop = function (ev)
 var addDragDropListners = function (LayoutDetails, dodrag,dodrop,allowdrop)
  {
 var self=this;
+
 for (let key in LayoutDetails) 
     {
     if (LayoutDetails.hasOwnProperty(key)) 

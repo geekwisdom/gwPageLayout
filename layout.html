@@ -80,8 +80,8 @@ Here is a simple 3 column layout. You can adjust the order of the fields by pres
 <script>
 var pageSettings = new gwSetting();
 var LayoutDetails={};
-var LayoutDetailsStr = pageSettings.GetSetting("pageLayout");
-if (LayoutDetailsStr == "")
+var LayoutDetailsStr = pageSettings.GetSetting("pageLayout1");
+if (LayoutDetailsStr == null || LayoutDetailsStr == "")
  {
 LayoutDetails["placeholder1"]="lastname";
 LayoutDetails["placeholder2"]="firstname";
