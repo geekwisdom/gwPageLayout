@@ -36,6 +36,7 @@ for (let key in LayoutDetails)
      	 var childEl=document.getElementById(childId);
 	 if (((typeof(parentEl) != 'undefined' && parentEl != null)) && ((typeof(childEl) != 'undefined' &&     childEl != null)))
 		{
+
 		parentEl.appendChild(childEl);
 		}
          }
@@ -67,7 +68,35 @@ return _newLayoutDetails;
 
 gwLayout.prototype.disableDragDrop = function()
 {
+var LayoutDetails = this.LayoutDetails;
+
+var removeBorders = function (LayoutDetails)
+{
+
+var self=this;
+for (let key in LayoutDetails) 
+    {
+    if (LayoutDetails.hasOwnProperty(key)) 
+        {
+	 var childId=LayoutDetails[key];
+	 var parentId=key;
+     	 var parentEl=document.getElementById(parentId);
+     	 var childEl=document.getElementById(childId);
+	 if (((typeof(parentEl) != 'undefined' && parentEl != null)) && ((typeof(childEl) != 'undefined' &&     childEl != null)))
+		{
+		childEl.classList.remove("gwDottedLayout");	
+		}
+         }
+     }
+
+}
+
+
+
+removeBorders(LayoutDetails);
 this.enabled=false;
+
+
 }
 
 gwLayout.prototype.enableDragDrop = function()
@@ -130,11 +159,36 @@ for (let key in LayoutDetails)
      }
  }
 
+var addBorders = function (LayoutDetails)
+{
+var self=this;
+for (let key in LayoutDetails) 
+    {
+	
+    if (LayoutDetails.hasOwnProperty(key)) 
+        {
+	 var childId=LayoutDetails[key];
+	 var parentId=key;
+     	 var parentEl=document.getElementById(parentId);
+     	 var childEl=document.getElementById(childId);
+	
+	 if (((typeof(parentEl) != 'undefined' && parentEl != null)) && ((typeof(childEl) != 'undefined' &&     childEl != null)))
+		{
+//		alert (parentEl);	
+		childEl.classList.add("gwDottedLayout");
+		}
+         }
+     }
+
+}
+
+
 if (!(self.deployed))
  { 
  self.deployed=true;
  addDragDropListners(LayoutDetails,ondrag,ondrop,allowDrop);
  }
+addBorders(LayoutDetails);
 self.enabled=true;
 }
 
